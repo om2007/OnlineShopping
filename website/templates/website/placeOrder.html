@@ -1,0 +1,43 @@
+
+{% extends 'website/dependencies.html' %}
+
+{% block content %}
+
+<div class="jumbotron container row">
+    <div class="col-md-6">
+        <div class="card card-body">
+           <form action="" method="POST">
+              {% csrf_token %}
+                {{form.as_p}}
+                <br>
+               {% for product in cart.products.all %}
+    <div class="card" style="width: 18rem; border:5px black solid">
+        <img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">{{product.description}}</p>
+            <p class="card-text">{{product.price}}</p>
+            <form action="{% url 'placeOrder' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Buy">
+                    </form>
+            <form action="{% url 'remove_from_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Remove from cart">
+            </form>
+        </div>
+    </div>
+{% endfor %}
+
+
+               <p>This is your cart. (If you cannot see anything that is because you haven't added anything to cart)</p>
+
+             </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+ 
